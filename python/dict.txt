@@ -1,0 +1,1 @@
+My problem is that its just returning all words from the test file and saying they're all spelled incorrect
