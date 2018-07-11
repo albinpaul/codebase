@@ -37,9 +37,41 @@ int main(int argc, char const *argv[])
 }
 
 
+const long int N=10000000;
+long long ar[N+1];
+void insert(long index){
+    while(index<=N){
+        ar[index]+=1;
+        //watch(index);
+        index+=(index&(-index));
+    }
+}
+long query(long index){
+    long sum=0;
+    while(index>0){
+        sum+=ar[index];
+        index-=(index&(-index));
+    }
+    return sum;
+}
 void solve()
 { 
    
-
+ int t;
+ cin >>t;
+ while(t--){
+    long n;
+    memset(ar,0,sizeof(ar));
+    cin>>n;
+//watch  (n);
+    long long  count=0;
+    for(long  i=0;i<n;i++){
+        long temp;
+        cin >>temp;
+        insert(temp);
+       count+=i+1-query(temp); 
+    }
+    cout<<count<<endl;
+ }
 
 }
