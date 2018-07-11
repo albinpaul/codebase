@@ -54,5 +54,6 @@ int main(){
 	BITtree <int> b(v);
 	cout<<b.tree<<endl;
 
+
 	return 0;
 }
