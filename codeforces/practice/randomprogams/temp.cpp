@@ -6,7 +6,8 @@
 #include <memory.h>
 using namespace std;
 #define FILL(a, val) memset((a), (val), sizeof(a));
-
+#define watch(x) cerr << (#x) << " is " << (x)<<" " 
+#define debug() cerr << "running till line " << __LINE__ << " in function " << __func__ << endl
 namespace SuffixArray
 {
     const int MAXSIZE = 200100;
@@ -16,6 +17,7 @@ namespace SuffixArray
     vector<int> getSuffixArray(string& s)
     {
         FILL(cnt, 0);
+        watch(s);cout<<endl;
         int n = s.size();
         for (int i = 0; i < n; ++i)
         {
@@ -29,7 +31,11 @@ namespace SuffixArray
         {
             p[--cnt[s[i]]] = i;
         }
+        for(int i =0;i<n;i++){
+            watch(i);watch(p[i]);cout<<endl;
+        }
         int count = 1;
+        
         c[p[0]] = count-1;
         for (int i = 1; i < n; ++i)
         {

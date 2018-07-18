@@ -1,28 +1,32 @@
-from itertools import permutations
-import numpy as np
-list1= np.arange(1,10)
-for i in permutations(list1):
-	g=np.asarray(i)
-	
-	g=g.reshape(3,3)
-	flag=1
-	for i in range(3):
-		if 15!=sum(g[:,i]):
-			flag=0
-			break
-	if(flag==0):
-		continue	
-	for i in range(3):
-		if 15!=sum(g[i,:]):
-			flag=0
-			break
-	if(flag==0):
-		continue
+import copy
+def ispalindrome(n):
+	string =str(n)
+	for i in range( int(len(string)/2) +1 ):
+		if string[i]!=string[len(string)-i-1]:
+			return False
+	return True
 
-	s=0
-	c = np.fliplr(g)
-	if np.trace(g)==15 and np.trace(c)==15:
+def foo(n,index):
+	if index < 50:
 		
-		print(','.join(map(str,g.flatten())))
-	#if np.trace(g) ==15 and np.diagonal(g)==15:
-	#	print(i) 
+		g=str(n)
+		#print(g)
+		if( ispalindrome(int(g))):
+			return False
+		else:
+			return foo(int(g)+int(g[::-1]),index+1)
+	else:
+		return True
+cou=0
+for i in range(10001,0,-1):
+	g=str(i)
+	#print("i is ",i)
+	t=copy.deepcopy(g)
+	
+	if( ispalindrome(int(g) )):
+		pass
+	else:
+		if ( foo(int(g)+int(g[::-1]),1 ) ==True ):
+			print(i)
+			cou+=1
+print(cou)
