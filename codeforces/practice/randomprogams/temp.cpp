@@ -6,6 +6,7 @@
 #include <memory.h>
 using namespace std;
 #define FILL(a, val) memset((a), (val), sizeof(a));
+
 namespace SuffixArray
 {
     const int MAXSIZE = 200100;
