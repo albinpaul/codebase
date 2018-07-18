@@ -17,6 +17,10 @@ ostream & operator<<(ostream &out, vector <long> &vt){
     return out;
 }
 
+
 int main() {
+
+
+
     return 0
 } 
