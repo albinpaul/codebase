@@ -1,0 +1,151 @@
+{
+    "id": "/neon/apps/web/ws",
+    "cmd": null,
+    "cpus": 1,
+    "mem": 2048,
+    "disk": 0,
+    "instances": 1,
+    "constraints": [
+      [
+        "hostname",
+        "CLUSTER",
+        "node3.qaenv06.flytxt.com"
+      ]
+    ],
+    "acceptedResourceRoles": [
+      "*"
+    ],
+    "container": {
+      "type": "DOCKER",
+      "volumes": [
+        {
+          "containerPath": "/etc/localtime",
+          "hostPath": "/etc/localtime",
+          "mode": "RO"
+        },
+        {
+          "containerPath": "/usr/share/zoneinfo/",
+          "hostPath": "/usr/share/zoneinfo/",
+          "mode": "RO"
+        },
+        {
+          "containerPath": "/conf",
+          "hostPath": "/usr/local/flytxt/datikraptr/conf",
+          "mode": "RO"
+        },
+        {
+          "containerPath": "/input",
+          "hostPath": "/usr/local/flytxt/datikraptr/input",
+          "mode": "RW"
+        },
+        {
+          "containerPath": "/partner/",
+          "hostPath": "/usr/local/flytxt/partner/",
+          "mode": "RW"
+        },
+        {
+          "containerPath": "/etc/resolv.conf",
+          "hostPath": "/opt/neon/resolv.conf",
+          "mode": "RO"
+        },
+        {
+          "containerPath": "/etc/nsswitch.conf",
+          "hostPath": "/opt/neon/nsswitch.conf",
+          "mode": "RO"
+        },
+        {
+          "containerPath": "/hadoop",
+          "hostPath": "/usr/local/flytxt/hadoop",
+          "mode": "RO"
+        },
+        {
+          "containerPath": "/flytxt_report/",
+          "hostPath": "/usr/local/flytxt/temp_flytxt_report/",
+          "mode": "RW"
+        },
+        {
+          "containerPath": "/campaign/",
+          "hostPath": "/usr/local/flytxt/campaign/",
+          "mode": "RW"
+        },
+        {
+          "containerPath": "/modelResults",
+          "hostPath": "/usr/local/flytxt/modelResults",
+          "mode": "RW"
+        }
+      ],
+      "docker": {
+        "image": "registry.qaenv06.flytxt.com/neon-ws:0.0.1-SNAPSHOT-6.0.8.7-SP2-939-gf80268b",
+        "network": "BRIDGE",
+        "portMappings": [
+          {
+            "containerPort": 9080,
+            "hostPort": 0,
+            "servicePort": 10037,
+            "protocol": "tcp",
+            "labels": {}
+          },
+          {
+            "containerPort": 9081,
+            "hostPort": 0,
+            "servicePort": 10038,
+            "protocol": "tcp",
+            "labels": {}
+          }
+        ],
+        "privileged": false,
+        "parameters": [
+          {
+              
+            "key": "net",
+            "value": "fly-net"
+          },
+          {
+            "key": "log-driver",
+            "value": "fluentd"
+          },
+          {
+            "key": "log-opt",
+            "value": "fluentd-address=localhost:24229"
+          },
+          {
+            "key": "log-opt",
+            "value": "tag=docker.neon-ws"
+          },
+          {
+            "key": "rm",
+            "value": "true"
+          }
+        ],
+        "forcePullImage": true
+      }
+    },
+    "env": {
+      "JAVA_OPTS": "-Xmx2048M",
+      "APP_PARAMS": "--spring.application.name=neon-ws --spring.cloud.config.uri=http://config-server-infra-neon.marathon:8080"
+    },
+    "healthChecks": [
+      {
+        "gracePeriodSeconds": 300,
+        "intervalSeconds": 60,
+        "timeoutSeconds": 20,
+        "maxConsecutiveFailures": 3,
+        "portIndex": 0,
+        "protocol": "TCP"
+      }
+    ],
+    "portDefinitions": [
+      {
+        "port": 10037,
+        "protocol": "tcp",
+        "name": "default",
+        "labels": {}
+      },
+      {
+        "port": 10038,
+        "protocol": "tcp",
+        "labels": {}
+      }
+    ],
+    "taskKillGracePeriodSeconds": 120
+  }
