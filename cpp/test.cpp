@@ -1,4 +1,3 @@
-//Author Vitalii
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -6,8 +5,7 @@
 #include <memory.h>
 using namespace std;
 #define FILL(a, val) memset((a), (val), sizeof(a));
-#define watch(x) cerr << (#x) << " is " << (x)<<" " 
-#define debug() cerr << "running till line " << __LINE__ << " in function " << __func__ << endl
+#define watch(x) cerr<<(#x)<<" is "<<x<<" "
 namespace SuffixArray
 {
     const int MAXSIZE = 200100;
@@ -15,27 +13,25 @@ namespace SuffixArray
     int p[MAXSIZE], c[MAXSIZE], cnt[MAXSIZE];
     int pn[MAXSIZE], cn[MAXSIZE];
     vector<int> getSuffixArray(string& s)
-    {
-        FILL(cnt, 0);
+    {   
         watch(s);cout<<endl;
+        FILL(cnt, 0);
         int n = s.size();
         for (int i = 0; i < n; ++i)
         {
             ++cnt[s[i]];
         }
+        cout<<cnt[0]<<" ";
         for (int i = 1; i < ALPHABET; ++i)
         {
             cnt[i] += cnt[i-1];
         }
+        cout<<endl;
         for (int i = 0; i < n; ++i)
         {
             p[--cnt[s[i]]] = i;
         }
-        for(int i =0;i<n;i++){
-            watch(i);watch(p[i]);cout<<endl;
-        }
         int count = 1;
-        
         c[p[0]] = count-1;
         for (int i = 1; i < n; ++i)
         {
