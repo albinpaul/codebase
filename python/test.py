@@ -23,3 +23,4 @@ with open('required.txt','r') as  f:
     for i in content:
         s+=ord(i)
     print (s)
+
