@@ -9,10 +9,10 @@ int main(){
     solve();
     return 0;
 }
-const long inputsize = 1000000;
+const long inputsize = 10000;
 bool ar[inputsize];
 vector <int> primes;
-const ostream & operator << (const ostream & out,set<int>&s){
+const ostream & operator << (const ostream & out,set<long>&s){
 
     for(auto &it : s){
         cout<<primes[it]<<" ";
@@ -33,7 +33,7 @@ void dfs(set <long> graph[],bool visited[] ,int index,set<int> &s){
     if(s.size()>mm){
         mm=s.size();
         cout<<"THe set is "<<endl;
-        cout<<s;
+        //cout<<s;
     }
     visited[index]=1;
    // watch(index);cout<<endl;
@@ -60,6 +60,36 @@ void customdfs(set <long> graph[]){
 
 
 }
+
+
+void bronkerbosch(set<long> graph[],set <long> R ,set <long> P,set <long> X){
+    
+    if(P.size()==0 && X.size()==0){
+        cout<<R;
+        exit ;
+    }
+    for(auto it = P.begin();it!=P.end();it++){
+        set <long> Rmod =R;
+        set <long> Pmod;
+        set <long> Nextit;
+        Nextit.clear();
+        set <long> Xmod;
+        Rmod.insert(*it);
+
+        for(auto it1 = graph[*it].begin();it1!=graph[*it].end();it1++){
+            Nextit.insert(*it1);
+        }
+        
+        set_intersection(P.begin(),P.end(),Nextit.begin(),Nextit.end(),inserter(Pmod,Pmod.begin()));
+        set_intersection(X.begin(),X.end(),Nextit.begin(),Nextit.end(),inserter(Xmod,Xmod.begin()));
+        bronkerbosch(graph,Rmod,Pmod,Xmod);
+        P.erase(*it);
+        X.insert(*it);
+    }
+
+
+}
+
 void solve(){
     ar[0]=1;
     ar[1]=1;
@@ -125,9 +155,14 @@ void solve(){
         }
     }
 
-  
-  
+    set <long > PP;
+    set <long > RR;
+    set <long > XX;
+    for(int i =0;i<primes.size();i++){
+        PP.insert(primes[i]);
+    }
+    bronkerbosch(graph,RR,PP,XX);
 
-    customdfs(graph);
+   // customdfs(graph);
 
 }
