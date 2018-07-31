@@ -12,6 +12,26 @@ int main(){
 const long inputsize = 10000;
 bool ar[inputsize];
 vector <int> primes;
+void dfs(vector <int> graph[],bool visited[] ,int primenumber,set<int> s){
+    s.insert(primenumber);
+    visited[primenumber]=1;
+    
+}
+void customdfs(vector <int> graph[]){
+    long primesize = primes.size();
+    bool visited[primesize] ;
+    memset(visited,0,sizeof(visited));
+    set <int> s;
+    for(int i =0;i<primesize;i++){
+        if(visited[i]==0){
+            dfs(graph,visited,s);
+        }
+    }
+}
+
+
+
+
 void solve(){
     ar[0]=1;
     ar[1]=1;
