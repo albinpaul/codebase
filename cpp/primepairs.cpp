@@ -9,70 +9,61 @@ int main(){
     solve();
     return 0;
 }
-const long inputsize = 10000;
+const long inputsize = 1000000;
 bool ar[inputsize];
 vector <int> primes;
 const ostream & operator << (const ostream & out,set<int>&s){
 
     for(auto &it : s){
-        cout<<it<<" ";
+        cout<<primes[it]<<" ";
     }cout<<endl;
 
 } 
 long mm=0;
-void dfs(set <long> graph[],bool visited[] ,int primenumber,set<int> &s){
+void dfs(set <long> graph[],bool visited[] ,int index,set<int> &s){
     if(!s.empty()){
         for(auto it = s.begin();it!=s.end();it++){
-            int flag=0;
-            for(int j=0;j<graph[primenumber].size();j++){
-                if (graph[primenumber][j]==*it){
-                    flag=1;
-                }
-            }
-            if(flag==0){
+            if(graph[index].find(*it)==graph[index].end()){
                 return;
             }
         }
     }
    
-    s.insert(primenumber);
+    s.insert(index);
     if(s.size()>mm){
         mm=s.size();
         cout<<"THe set is "<<endl;
         cout<<s;
     }
-    visited[primenumber]=1;
-   // watch(primenumber);cout<<endl;
-    for(auto it = graph[primenumber].begin();it!=graph[primenumber];it++){
+    visited[index]=1;
+   // watch(index);cout<<endl;
+    for(auto it = graph[index].begin();it!=graph[index].end();it++){
 
         if(visited[*it]==0){
-           // watch(graph[primenumber][i]);
+           // watch(graph[index][i]);
             dfs(graph,visited,*it,s);
         }
     }
-    //visited[primenumber]=0;
+    //visited[index]=0;
     
-    s.erase(primenumber);
+    s.erase(index);
 }
 void customdfs(set <long> graph[]){
-    bool visited[inputsize] ;
+    bool visited[primes.size()] ;
     memset(visited,0,sizeof(visited));
     set <int> s;
     for(int i =0;i<primes.size();i++){    
-        if(graph[primes[i]].size()>0 && ar[primes[i]]==0){
+        if(graph[i].size()>0 ){
             dfs(graph,visited,i,s);
         }
     }
 
 
 }
-
-
-
-
 void solve(){
     ar[0]=1;
     ar[1]=1;
+    
     for(long i =2;i<inputsize;i++){
         if(ar[i]==0){
             for(int j=2*i;j<inputsize;j+=i){
@@ -87,16 +78,16 @@ void solve(){
     }
     
     int numberofprimes = primes.size();
-    set <long> graph[inputsize];
-    memset(graph,0,sizeof(graph));
+    set <long> graph[numberofprimes];
+
     for(int i=0;i<numberofprimes;i++){
+        
         for(int j=i+1;j<numberofprimes;j++){
-  
+            
             long long a=primes[i],b=primes[j];
-            long long temp = primes[i];
             stack <int> s1;
             stack <int> s2;
-
+            long long temp = primes[i];
             while(temp){
                 s1.push(temp%10);
                 temp/=10;
@@ -117,31 +108,25 @@ void solve(){
                 a=a*10+(s2.top())%10;
                 s2.pop();
             }
-            // watch(primes[i]);watch(primes[j]);cout<<endl;
-            //watch(a);watch(b);cout<<endl;
-            
-            if(a>=inputsize || b>=inputsize){
+           
+            if(a>=inputsize  || b>=inputsize){
                 continue;
             }
            
             if(ar[a]==0 && ar[b]==0){
                 
-                graph[primes[i]].insert(primes[j]);
-                graph[primes[j]].insert(primes[i]);
+                assert(primes[i]<inputsize && primes[j]<inputsize);
+                
+                graph[i].insert(j);
+                graph[j].insert(i);
+                //watch(a);watch(b);
             }
 
         }
     }
 
-    
-    // for(int i =0;i<inputsize;i++){
-    //     if(graph[i].size()>0){
-    //         cout<<"i is "<<i<<" "; 
-    //         for(int j=0;j<graph[i].size();j++){
-    //             cout<<graph[i][j]<<" ";
-    //         }cout<<endl;
-    //     }
-    // }
+  
+  
 
     customdfs(graph);
 
