@@ -1,26 +1,32 @@
-from pprint import pprint
-# with open('p059_cipher.txt','r') as f:
-#     content=f.read()
-#     arr =list(map(int,content.split(',')))
-#     #pprint(arr)
-#     for i in range(ord('a'),ord('z')+1):
-#         for j in range(ord('a'),ord('z')+1):
-#             for k in range(ord('a'),ord('z')+1):
-#                 temp =[0]*len(arr)
-#                 #print(i,j,k)
-#                 for index in range(0,len(arr),3):
-#                     if(index<len(arr)):
-#                         temp[index] = arr[index]^i
-#                     if(index+1<len(arr)):
-#                         temp[index+1] = arr[index+1]^j
-#                     if(index+2<len(arr)):
-#                         temp[index+2] = arr[index+2]^k
-#                 print(''.join(map(chr,temp)))
+import asyncio
+import websockets
+from datetime import datetime,timedelta
+from random import randint
+import sys
+Maxint=31
+Minint=18
+temperature =25
+#correctvalue = []
+ac_temperature= 25
 
-with open('required.txt','r') as  f:
-    content=f.read()
-    s=0
-    for i in content:
-        s+=ord(i)
-    print (s)
+url='ws://flyops:flypassWORD@jarvis.qaperf.flytxt.com:31987/websocketPath'
+testurl='ws://flyops:flypassWORD@node1.qaperf.flytxt.com:8090/websocketPath'
 
+async def hello():
+    async with websockets.connect(url) as websocket:
+        for i in range(int(sys.argv[1])):       
+            sensor_value=randint(Minint,Maxint+1)
+            ac_room_no=1
+            datee = datetime.now().strftime("%d-%m-%Y")
+            #airconditionerid=916633854924
+            airconditionerid=911000400000
+            
+            #airconditionerid=916763697266
+            
+            name = str(sensor_value)+","+str(ac_room_no)+","+str(datee)+","+str(airconditionerid)
+            print(name)
+            await asyncio.sleep(int(sys.argv[2]))
+            await websocket.send(name)
+       
+
+asyncio.get_event_loop().run_until_complete(hello())
