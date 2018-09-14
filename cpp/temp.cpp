@@ -17,7 +17,7 @@ typedef vector<long> vl;
 typedef vector<long> vi;
 void init();
 void solve();
-void recursive();
+void recursive(int ,set <int>);
 int main(int argc, char const *argv[])
 {
     ios::sync_with_stdio(false);
@@ -31,25 +31,22 @@ int main(int argc, char const *argv[])
     tt = clock();
 #endif
 }
-const long N=(long)100;
+const long N=(long)20000;
 bool ar[N];
 vector <int> primes;
+
 vector<vector <int>> graph;
 
 void solve(){
-    init();   
-}
-void recursive(int index,vector <int > current){
-    
-    for(int j=0;j<current.size();j++){
-        vector <int> vertexes;
-        for(int k=0;k<graph[j].size();k++){
-            vertexes.push_back(graph[j][k]);
-        }
-        recursive(index+1,vertexes);
-    }
+    init();
+  
+    recursive();
 }
 
+void recursive(int index,set <int > current){
+   
+}
+ 
 void init(){
     ar[0]=1;
     ar[1]=1;
@@ -63,6 +60,7 @@ void init(){
     for(int i =0;i<N;i++){
         if(ar[i]==0){
             primes.emplace_back(i);
+            setbits.emplace_back(0);
         }
     }
     graph.resize(primes.size());
@@ -98,4 +96,12 @@ void init(){
             }
         }
     }
+
+    // for(int i =0;i<graph.size();i++)
+    // {
+    //     cerr<<primes[i]<<" ";
+    //     for(int j=0;j<graph[i].size();j++){
+    //         cerr<<primes[graph[i][j]]<<" ";
+    //     }cout<<endl;
+    // }
 }

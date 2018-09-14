@@ -1,14 +1,18 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
-#include <string>
-#include <memory.h>
-using namespace std;
-#define FILL(a, val) memset((a), (val), sizeof(a));
-#define watch(x) cerr<<(#x)<<" is "<<x<<" "
-
-int main()
-{
-    cout<<numeric_limits<unsigned long long >::max();
-    return 0;   
+#include <utility>
+ 
+void f(int& x) {
+    std::cout << "lvalue reference overload f(" << x << ")\n";
+}
+ 
+void f(const int& x) {
+    std::cout << "lvalue reference to const overload f(" << x << ")\n";
+}
+ 
+void f(int&& x) {
+    std::cout << "rvalue reference overload f(" << x << ")\n";
+}
+ 
+int main() {
+  return 0;
 }

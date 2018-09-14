@@ -11,6 +11,8 @@
         "vector": "cpp",
         "initializer_list": "cpp",
         "valarray": "cpp",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "chrono": "cpp",
+        "limits": "cpp"
     }
 }
