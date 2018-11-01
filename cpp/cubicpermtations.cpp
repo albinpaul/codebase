@@ -16,30 +16,10 @@ typedef long long ll;
 typedef vector<long> vl;
 typedef vector<int> vi;
 const long long N=(long long )10000;
-vector <int> polygonal[6];
-unordered_map <int,vector<int>> um[6];
-unordered_map <int,int> rememberingindex[6];
-
-int fun1(int a){
-    return (a*(a+1))/2;
-}
-int fun2(int a){
-    return (a*a);
-}
-int fun3(int a){
-    return (a*(3*a-1))/2;
-}
-int fun4(int a){
-    return a*(2*a-1);
-}
-int fun5(int a){
-    return (a*(5*a-3))/2;
-}
-int fun6(int a){
-    return (a*(3*a-2));
-}
-
-ostream & operator<< (ostream & out,vector <int> &vec){
+vector <long long> cubes;
+unordered_map<string,int> um;
+template<typename T>
+ostream & operator<< (ostream & out,vector <T> &vec){
     out<<"[";
     for(auto it =vec.begin();it!=vec.end();it++){
         out<<*it;
@@ -50,8 +30,8 @@ ostream & operator<< (ostream & out,vector <int> &vec){
     out<<"]";
     return out;
 }
-
-ostream & operator<< (ostream & out,vector <pair<int,int>> &vec){
+template<typename P,typename Q>
+ostream & operator<< (ostream & out,vector <pair<P,Q>> &vec){
     out<<"[";
     for(auto it =vec.begin();it!=vec.end();it++){
         out<<"["<<it->first<<","<<it->second<<"]";
@@ -63,13 +43,14 @@ ostream & operator<< (ostream & out,vector <pair<int,int>> &vec){
     out<<"]";
     return out;
 }
-void init(){
-    
-}
 
 void solve(){
-    init();
-    
+    for(int i=0;i<N;i++){
+        cubes.emplace_back(i*1L*i*i);
+
+    }
+
+    cout<<cubes<<endl;
 }
 
 
