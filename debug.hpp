@@ -19,7 +19,6 @@ ostream & operator<<(ostream &out, unordered_set < T1 > v){
 	for(auto it:v){
 		out << it << " ";
 	}
-
 	return out;
 }
 
