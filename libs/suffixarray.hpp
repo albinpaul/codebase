@@ -1,4 +1,6 @@
+#include <bits/stdc++.h>
 using namespace std;
+
 struct Suffixarray {
 	struct myTuple {
 		int originalIndex;
@@ -34,6 +36,7 @@ struct Suffixarray {
 				}
 				newrank[L[i].originalIndex] = currRank;
 			}
+			rank = newrank;
 		}
 		vector <int> result(n);
 		for(int i=0;i<n;i++){

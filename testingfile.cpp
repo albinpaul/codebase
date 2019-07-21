@@ -61,6 +61,7 @@ struct Suffixarray {
 				}
 				newrank[L[i].originalIndex] = currRank;
 			}
+			rank = newrank;
 		}
 		vector <int> result(n);
 		for(int i=0;i<n;i++){
@@ -73,7 +74,7 @@ struct Suffixarray {
 int main(){
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
-	Suffixarray test("aaab");
+	Suffixarray test("abaab");
 	cout << test.getSuffixArray();
 	return 0;
 }
