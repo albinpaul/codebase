@@ -69,12 +69,32 @@ struct Suffixarray {
 		}
 		return result;
 	}
+	vector<int> kasaiutil(vector<int> sa)
+	{
+		int n=inputstring.size(),k=0;
+		vector<int> lcp(n,0);
+		vector<int> rank(n,0);
+
+		for(int i=0; i<n; i++) rank[sa[i]]=i;
+
+		for(int i=0; i<n; i++, k?k--:0)
+		{
+			if(rank[i]==n-1) {k=0; continue;}
+			int j=sa[rank[i]+1];
+			while(i+k<n && j+k<n && inputstring[i+k]==inputstring[j+k]) k++;
+			lcp[rank[i]]=k;
+		}
+		return lcp;
+	}
+	vector <int> getlcparray() {
+		return kasaiutil(getSuffixArray());
+	}
 };
 
 int main(){
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
-	Suffixarray test("abaab");
-	cout << test.getSuffixArray();
+	Suffixarray test("banana");
+	cout << test.getlcparray() << '\n';
 	return 0;
 }

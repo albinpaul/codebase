@@ -2,9 +2,10 @@
 using namespace std;
 template <typename T>
 ostream & operator<<(ostream &out,vector <T> v){
+	int i=0;
 	for(auto it:v){
-		out<<it<<" ";
-	}out<<endl;
+		out<<(i++)<<" -> "<<it<<"\n";
+	}out<< endl;
 	return out;
 }
 
