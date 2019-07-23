@@ -14,6 +14,7 @@ using namespace std;
 #ifdef DEBUG
 #include "debug.hpp"
 #endif
+#define watch(x) cerr << #x  << " is " << x << ' '
 
 template <typename T>
 using ordered_set =
@@ -105,8 +106,35 @@ int main(){
 	cin >> s;
 	Suffixarray test(s);
 	vector <int> lcp = test.getlcparray();
-	test.output();
-	cerr << lcp << '\n';
+	// test.output();
+	// cerr << lcp << '\n';
+	stack <int> st;
+	int n = lcp.size();
+	int answer = n;
+	int i=0;
+	while(i < n){
+		if (st.empty() || lcp[st.top()] <= lcp[i] ){
+			st.push(i++);
+		}else{
+			int tp = st.top();
+			st.pop();
+
+			int rect =  lcp[tp] * (st.empty() ? i + 1 : i + 1 - tp);
+			answer= max(answer, rect);
+			// watch(rect);watch(i);watch(tp);cerr << '\n';
+		}
+	}
 	
+	while(!st.empty()) {
+		
+		int tp = st.top ();
+		// watch(tp);
+		st.pop();
+		int rect =  lcp[tp] * (st.empty() ? i + 1 : i + 1 - tp);
+
+			// watch(rect);watch(i);watch(tp);cerr << '\n';
+		answer= max(answer, rect);
+	}
+	cout << answer << '\n';
 	return 0;
 }
