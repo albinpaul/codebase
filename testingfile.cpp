@@ -32,11 +32,12 @@ struct Suffixarray {
 		int firstHalf;
 		int secondHalf;
 		bool operator < (myTuple T) {
-			if (firstHalf == T.firstHalf) return secondHalf < T.secondHalf;
-			else return firstHalf < T.firstHalf; 
+			if (this->firstHalf == T.firstHalf) return this->secondHalf < T.secondHalf;
+			else return this ->firstHalf < T.firstHalf; 
 		}
 	};
 	string inputstring;
+	vector <int> suffixarray;
 	Suffixarray (string input):inputstring(input) {
 	}
 	vector <int> getSuffixArray () {
@@ -87,14 +88,25 @@ struct Suffixarray {
 		return lcp;
 	}
 	vector <int> getlcparray() {
-		return kasaiutil(getSuffixArray());
+		suffixarray = getSuffixArray();
+		return kasaiutil(suffixarray);
+	}
+	void output () {
+		for(int i=0;i<suffixarray.size();i++){
+			cerr << i << ' ' << inputstring.substr(suffixarray[i]) << '\n';
+		}
 	}
 };
 
 int main(){
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
-	Suffixarray test("banana");
-	cout << test.getlcparray() << '\n';
+	string s ;
+	cin >> s;
+	Suffixarray test(s);
+	vector <int> lcp = test.getlcparray();
+	test.output();
+	cerr << lcp << '\n';
+	
 	return 0;
 }
