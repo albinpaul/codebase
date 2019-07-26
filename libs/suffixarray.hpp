@@ -1,17 +1,17 @@
 #include <bits/stdc++.h>
 using namespace std;
-
 struct Suffixarray {
 	struct myTuple {
 		int originalIndex;
 		int firstHalf;
 		int secondHalf;
 		bool operator < (myTuple T) {
-			if (firstHalf == T.firstHalf) return secondHalf < T.secondHalf;
-			else return firstHalf < T.firstHalf; 
+			if (this->firstHalf == T.firstHalf) return this->secondHalf < T.secondHalf;
+			else return this ->firstHalf < T.firstHalf; 
 		}
 	};
 	string inputstring;
+	vector <int> suffixarray;
 	Suffixarray (string input):inputstring(input) {
 	}
 	vector <int> getSuffixArray () {
@@ -43,5 +43,31 @@ struct Suffixarray {
 			result[i] = L[i].originalIndex;
 		}
 		return result;
+	}
+	vector<int> kasaiutil(vector<int> sa)
+	{
+		int n=inputstring.size(),k=0;
+		vector<int> lcp(n,0);
+		vector<int> rank(n,0);
+
+		for(int i=0; i<n; i++) rank[sa[i]]=i;
+
+		for(int i=0; i<n; i++, k?k--:0)
+		{
+			if(rank[i]==n-1) {k=0; continue;}
+			int j=sa[rank[i]+1];
+			while(i+k<n && j+k<n && inputstring[i+k]==inputstring[j+k]) k++;
+			lcp[rank[i]]=k;
+		}
+		return lcp;
+	}
+	vector <int> getlcparray() {
+		suffixarray = getSuffixArray();
+		return kasaiutil(suffixarray);
+	}
+	void output () {
+		for(int i=0;i<suffixarray.size();i++){
+			cerr << i << ' ' << inputstring.substr(suffixarray[i]) << '\n';
+		}
 	}
 };
