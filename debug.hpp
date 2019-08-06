@@ -25,5 +25,12 @@ ostream & operator<<(ostream &out, unordered_set < T1 > v){
 
 
 
+template <typename T1>
+ostream & operator<<(ostream &out, set< T1 > v){
+	for(auto it:v){
+		out << it << " ";
+	}
+	return out;
+}
 
 
