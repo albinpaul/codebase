@@ -15,7 +15,7 @@ struct Suffixarray {
 	vector <int> suffixarray;
 	Suffixarray (string input):inputstring(input) {
 	}
-	vector <int> getSuffixArray () {
+	void getSuffixArray () {
 		int n = inputstring.size();
 		vector <int> rank(n);
 		for(int i=0 ; i < n ; i++){
@@ -39,32 +39,30 @@ struct Suffixarray {
 			}
 			rank = newrank;
 		}
-		vector <int> result(n);
 		for(int i=0;i<n;i++){
-			result[i] = L[i].originalIndex;
+			suffixarray[i] = L[i].originalIndex;
 		}
-		return result;
 	}
-	vector<int> kasaiutil(vector<int> sa)
+	vector<int> kasaiutil()
 	{
 		int n=inputstring.size(),k=0;
 		vector<int> lcp(n,0);
 		vector<int> rank(n,0);
 
-		for(int i=0; i<n; i++) rank[sa[i]]=i;
+		for(int i=0; i<n; i++) rank[suffixarray[i]]=i;
 
 		for(int i=0; i<n; i++, k?k--:0)
 		{
 			if(rank[i]==n-1) {k=0; continue;}
-			int j=sa[rank[i]+1];
+			int j=suffixarray[rank[i]+1];
 			while(i+k<n && j+k<n && inputstring[i+k]==inputstring[j+k]) k++;
 			lcp[rank[i]]=k;
 		}
 		return lcp;
 	}
 	vector <int> getlcparray() {
-		suffixarray = getSuffixArray();
-		return kasaiutil(suffixarray);
+		getSuffixArray();
+		return kasaiutil();
 	}
 	void output () {
 		for(int i=0;i<suffixarray.size();i++){
