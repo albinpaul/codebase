@@ -1,5 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
+
+
+
 struct Suffixarray {
 	struct myTuple {
 		int originalIndex;
@@ -12,10 +15,11 @@ struct Suffixarray {
 	};
 	string inputstring;
 	vector <int> suffixarray;
-	Suffixarray (string input):inputstring(input) {
-	}
+	vector <int> lcp;
+	Suffixarray (string input):inputstring(input) {}
 	void getSuffixArray () {
 		int n = inputstring.size();
+		suffixarray.resize(n);
 		vector <int> rank(n);
 		for(int i=0 ; i < n ; i++){
 			rank[i] = inputstring[i] - 'a';
@@ -42,14 +46,12 @@ struct Suffixarray {
 			suffixarray[i] = L[i].originalIndex;
 		}
 	}
-	vector<int> kasaiutil()
+	void kasaiutil()
 	{
 		int n=inputstring.size(),k=0;
-		vector<int> lcp(n,0);
+		lcp.resize(n);
 		vector<int> rank(n,0);
-
 		for(int i=0; i<n; i++) rank[suffixarray[i]]=i;
-
 		for(int i=0; i<n; i++, k?k--:0)
 		{
 			if(rank[i]==n-1) {k=0; continue;}
@@ -57,41 +59,22 @@ struct Suffixarray {
 			while(i+k<n && j+k<n && inputstring[i+k]==inputstring[j+k]) k++;
 			lcp[rank[i]]=k;
 		}
-		return lcp;
 	}
 	vector <int> getlcparray() {
 		getSuffixArray();
-		return kasaiutil();
-	}
-	void output () {
-		for(int i=0;i<suffixarray.size();i++){
-			cerr << i << ' ' << inputstring.substr(suffixarray[i]) << '\n';
-		}
-	}
-	vector<int> kasaiutil(vector<int> sa)
-	{
-		int n=inputstring.size(),k=0;
-		vector<int> lcp(n,0);
-		vector<int> rank(n,0);
-
-		for(int i=0; i<n; i++) rank[sa[i]]=i;
-
-		for(int i=0; i<n; i++, k?k--:0)
-		{
-			if(rank[i]==n-1) {k=0; continue;}
-			int j=sa[rank[i]+1];
-			while(i+k<n && j+k<n && inputstring[i+k]==inputstring[j+k]) k++;
-			lcp[rank[i]]=k;
-		}
+		kasaiutil();
 		return lcp;
 	}
-	vector <int> getlcparray() {
-		suffixarray = getSuffixArray();
-		return kasaiutil(suffixarray);
-	}
-	void output () {
+	void suffixarrayoutput () {
 		for(int i=0;i<suffixarray.size();i++){
-			cerr << i << ' ' << inputstring.substr(suffixarray[i]) << '\n';
+			cerr << i << "->" << inputstring.substr(suffixarray[i]) << '\n';
 		}
+		cerr << '\n';
+	}
+	void lcparrayoutput(){
+		for(int i=0;i<suffixarray.size();i++){
+			cerr << i << "->" << lcp[i] <<" "<< inputstring.substr(suffixarray[i]) << '\n';
+		}
+		cerr << '\n';
 	}
 };
