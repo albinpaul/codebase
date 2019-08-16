@@ -114,5 +114,6 @@ int main()
 	sr.kasaiutil();
 	sr.suffixarrayoutput();
 	sr.lcparrayoutput();
+
 	return 0;
 }
