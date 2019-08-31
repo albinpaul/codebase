@@ -1,10 +1,5 @@
-
-//~ while (clock()<=69*CLOCKS_PER_SEC)
-//~ #pragma comment(linker, "/stack:200000000")
 #pragma GCC optimize("O3")
-//~ #pragma GCC optimize("Ofast")
-//~ #pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
-//~ #pragma GCC optimize("unroll-loops")
+
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -44,14 +39,16 @@ struct Suffixarray {
 	string inputstring;
 	vector <int> suffixarray;
 	vector <int> lcp;
-	Suffixarray (string input):inputstring(input) {}
-	void getSuffixArray () {
+	
+
+	Suffixarray (string input):inputstring(input) {
 		int n = inputstring.size();
 		suffixarray.resize(n);
 		vector <int> rank(n);
 		for(int i=0 ; i < n ; i++){
 			rank[i] = inputstring[i] - 'a';
 		}
+		
 		myTuple L[n];
 		for(int cnt = 1 ; cnt < n ; cnt *= 2) {
 			for(int i = 0 ; i < n ; i++ ){
@@ -89,7 +86,6 @@ struct Suffixarray {
 		}
 	}
 	vector <int> getlcparray() {
-		getSuffixArray();
 		kasaiutil();
 		return lcp;
 	}
@@ -112,11 +108,14 @@ int main()
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 
-	Suffixarray sr("jdfh#sdf");
-	sr.getSuffixArray();
+	Suffixarray sr("aabaacaba");
 	sr.kasaiutil();
 	sr.suffixarrayoutput();
 	sr.lcparrayoutput();
 
+
+
+
+	
 	return 0;
 }

@@ -16,8 +16,7 @@ struct Suffixarray {
 	string inputstring;
 	vector <int> suffixarray;
 	vector <int> lcp;
-	Suffixarray (string input):inputstring(input) {}
-	void getSuffixArray () {
+	Suffixarray (string input):inputstring(input) {
 		int n = inputstring.size();
 		suffixarray.resize(n);
 		vector <int> rank(n);
@@ -61,7 +60,6 @@ struct Suffixarray {
 		}
 	}
 	vector <int> getlcparray() {
-		getSuffixArray();
 		kasaiutil();
 		return lcp;
 	}
