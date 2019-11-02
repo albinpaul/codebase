@@ -91,31 +91,97 @@ struct Suffixarray {
 	}
 	void suffixarrayoutput () {
 		for(int i=0;i<suffixarray.size();i++){
-			cerr << i << "->" << inputstring.substr(suffixarray[i]) << '\n';
+			cerr << i << " -> " << suffixarray[i] << " " << inputstring.substr(suffixarray[i]) << '\n';
 		}
 		cerr << '\n';
 	}
 	void lcparrayoutput(){
 		for(int i=0;i<suffixarray.size();i++){
-			cerr << i << "->" << lcp[i] <<" "<< inputstring.substr(suffixarray[i]) << '\n';
+			cerr << i << " -> " << lcp[i] <<" "<< inputstring.substr(suffixarray[i]) << '\n';
 		}
 		cerr << '\n';
 	}
 };
+
+int length,a,b;
+string input;
+vector <int> reverseindex;
+vector <int> dp;
+int getx(const Suffixarray &sr,int index) {
+	return (index == 0) ? 0 : (sr.suffixarray[index -1] - sr.suffixarray[index] >=1) ? min( sr.lcp[index - 1] , sr.suffixarray[index -1] - sr.suffixarray[index] ) : 0 ;
+}
+int getvalue(const Suffixarray &sr, int index) {
+
+
+	int x = getx(sr,index);
+	if (index != 0) {
+		int lcpx = sr.lcp[index - 1];
+		int xindex = index;
+		while(xindex >= 1 && sr.lcp[xindex - 1] >= lcpx) {
+			x = max( x,(sr.suffixarray[xindex - 1] - sr.suffixarray[index] >= 1)? min(sr.lcp[index - 1] , sr.suffixarray[xindex - 1] - sr.suffixarray[index] ) : 0) ;
+			xindex--;
+		} 
+	}
+	int y = (index >= length - 1) ? 0 : (sr.suffixarray[index + 1] - sr.suffixarray[index] >=1) ? min( sr.lcp[index] , sr.suffixarray[index + 1] - sr.suffixarray[index] ) : 0  ;
+	
+	return  max(x,y) ;	
+}
+int getstring(const Suffixarray &sr, int index) {
+	if (index < length) {
+		if (dp[index] != -1) {
+			return dp[index];
+		}
+		int rindex = reverseindex[index];
+		int lcpvalue = getvalue(sr,rindex);
+		int answer = numeric_limits <int> :: max();
+		for(int i=1 ; i<=lcpvalue ; i++ ) {
+			answer = min(answer , b + getstring(sr,index + i) );
+		}
+		if (lcpvalue == 0 || a < b) {
+			answer = min(answer , a + getstring(sr,index + 1) );
+		}
+		
+		watch(rindex);watch(index);watch(lcpvalue);watch(answer);watch(sr.inputstring[index]);cerr << endl;
+	
+		dp[index] = answer ;
+		return answer ;
+	} else {
+		return 0;
+	}
+}
+
+
+void solve(int testcase){
+	cin >> length >> a >> b;
+	cin >> input;
+	// cerr << input << endl;
+	reverse(input.begin(),input.end());
+	Suffixarray sr(input);
+	sr.kasaiutil();
+	sr.suffixarrayoutput();
+	sr.lcparrayoutput();
+	vector <int> reverseind(length);
+	for(int i=0;i<sr.suffixarray.size();i++) {
+		reverseind[sr.suffixarray[i]] = i;
+	}
+	reverseindex = reverseind;
+	dp.resize(length);
+	fill(dp.begin(),dp.end(),-1);
+	cout << getstring(sr,0) << '\n';
+}
+
 
 int main()
 {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 
-	Suffixarray sr("aabaacaba");
-	sr.kasaiutil();
-	sr.suffixarrayoutput();
-	sr.lcparrayoutput();
-
-
-
-
+	int tt ;
+	cin >> tt;
+	tt =1;
+	for(int t=0;t < tt;t++ ) {
+		solve(t);
+	}
 	
 	return 0;
 }
