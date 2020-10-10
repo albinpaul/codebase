@@ -1,7 +1,8 @@
-mylist = ['x', 'x0', 'x', 'x1', 'x']
-answer = -1
-for item in range(len(mylist) -1, -1, -1):
-    if mylist[item].isalnum():
-        answer = item
-        break
-print(answer)
+from itertools import permutations as p
+
+n = 3      #This can be change
+
+permu_lst = [i for i in p(range(1, n+1)]
+
+for permutation in permu_lst:
+    print(*permutation)

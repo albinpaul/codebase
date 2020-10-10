@@ -97,53 +97,41 @@ using ll = long long;
 const long int N = 2.1e5;
 const int INF = 0x3f3f3f3f;
 // int a[N];
-ll sqr(ll num) {
-  return num * num;
-}
-
 void init() {
   int n;
   cin >> n;
-  long long s = (n  * ( n + 1 ))/2;
-  if (s%2 != 0) {
-    cout << "NO\n";
-  } 
-   else 
-  {
-    cout << "YES\n";
-    vector <int> v1,v2;
-    ll sum1 = 0,sum2 = 0;
-    if (n%4 == 0) {
-      for(int i=1;i<=n;i+=4) {
-        v1.push_back(i);
-        v1.push_back(i + 3);
-        v2.push_back(i + 1);
-        v2.push_back(i + 2); 
+  vector <int> answer {0, 6, 28, 96, 252};
+  
+  for(int i=0;i<min(n,(int)answer.size());i++) {
+    cout << answer[i] << '\n';
+  }
+  int chsize = 7;
+  auto check = [&](int i,int j) {
+    return 0 <= i && i < chsize && 0<= j && j < chsize; 
+  };
+  for(int i =0;i<chsize;i++) {
+    for(int j=0;j<chsize;j++) {
+      int count = 0;
+      vector <pair <int,int>> moves = {
+        {2,1},
+        {1,2},
+        {-1,2},
+        {-2,1},
+        {-1,-2},
+        {-2,-1},
+        {1,-2},
+        {2,-1}
+      };
+      for(auto p:moves) {
+        count+= check(i + p.first, j + p.second);
       }
-    }
-    else if ((n  + 1)%4 == 0){
-      v1 = {1,2},v2 = {3};
-      for(int i=4;i<=n;i+=4) {
-        v1.push_back(i);
-        v1.push_back(i + 3);
-        v2.push_back(i + 1);
-        v2.push_back(i + 2); 
-      }
-    }
-    // assert(sum1,sum2);
-    // sum1= accumulate(all(v1),0);sum2 = accumulate(all(v2),0);
-    // debug(sum1,sum2);
-    
-    cout << v1.size() << '\n';
-    for(auto v:v1) {
-      cout << v << ' ';
+      cout << count << " ";
     }
     cout << '\n';
-    cout << v2.size() << '\n';
-    for(auto v:v2) {
-      cout << v << ' ';
-    }
+    
   }
+  
+
 }
 
 

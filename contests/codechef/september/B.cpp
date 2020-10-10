@@ -94,75 +94,48 @@ void debug_out(Head H, Tail... T) {
 using pii = pair <int,int>;
 using vi = vector <int>;
 using ll = long long;
-const long int N = 2.1e5;
+const long int N = 105;
 const int INF = 0x3f3f3f3f;
-// int a[N];
-ll sqr(ll num) {
-  return num * num;
-}
-
-void init() {
+int a[N][N];
+void solve() {
   int n;
   cin >> n;
-  long long s = (n  * ( n + 1 ))/2;
-  if (s%2 != 0) {
-    cout << "NO\n";
-  } 
-   else 
-  {
-    cout << "YES\n";
-    vector <int> v1,v2;
-    ll sum1 = 0,sum2 = 0;
-    if (n%4 == 0) {
-      for(int i=1;i<=n;i+=4) {
-        v1.push_back(i);
-        v1.push_back(i + 3);
-        v2.push_back(i + 1);
-        v2.push_back(i + 2); 
-      }
-    }
-    else if ((n  + 1)%4 == 0){
-      v1 = {1,2},v2 = {3};
-      for(int i=4;i<=n;i+=4) {
-        v1.push_back(i);
-        v1.push_back(i + 3);
-        v2.push_back(i + 1);
-        v2.push_back(i + 2); 
-      }
-    }
-    // assert(sum1,sum2);
-    // sum1= accumulate(all(v1),0);sum2 = accumulate(all(v2),0);
-    // debug(sum1,sum2);
-    
-    cout << v1.size() << '\n';
-    for(auto v:v1) {
-      cout << v << ' ';
-    }
-    cout << '\n';
-    cout << v2.size() << '\n';
-    for(auto v:v2) {
-      cout << v << ' ';
+  range(i,n) {
+    range(j,n) {
+      cin >> a[i][j];
     }
   }
+  ll answer = 0;
+  rrange(i,n) {
+    if (i == 0) {
+      break;
+    }
+    debug (i);
+    bool do_swap= false;
+    for( int j = i; j >= 0 ; --j ){
+      int x = i - j, y = i;
+      debug(x,y,(x) * n + (y + 1),a[x][y]);
+      do_swap |=( (x) * n + (y + 1) != a[x][y]);
+    }
+    debug(do_swap);
+    if (do_swap) {
+      for(int j=0;j<=i;j++) {
+        for(int k=0;k<j;k++) {
+          swap(a[j][k],a[k][j]);
+        }
+      }
+    }
+    answer += do_swap;
+    
+  }
+  cout << answer << '\n';
+  
 }
-
-
-void solve() {
-
-}
-
-
-
 int main(void) { 
   int t;
-  init();
-  return 0;
   cin >> t;
-  for(int tt = 0 ; tt < t ; tt++)  
-  {
-    // cout << "Case #" << tt + 1 << ": ";
+  for(int tt = 0 ; tt < t ; tt++ )  
     solve();
-  }
   return 0;
 
 }

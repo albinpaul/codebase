@@ -1,0 +1,5 @@
+.gdbinit:6: Error in sourced command file:
+a.out: No such file or directory.
+quit
+.gdbinit:6: Error in sourced command file:
+a.out: No such file or directory.
