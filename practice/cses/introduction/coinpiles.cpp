@@ -103,45 +103,43 @@ ll sqr(ll num) {
 }
 
 void init() {
-  string s;
-  cin >> s;
-  vector <int> count(26,0);
-  for(auto c:s) {
-    count[c - 'A']++;
   }
-  vector <int> odds;
-  for(int i=0;i<count.size();i++) {
-    if (count[i] % 2)
-      odds.push_back(i);
-  }
-  
-  if (odds.size() > 1) {
-    cout << "NO SOLUTION\n";
-  } else {
-    deque <int> q;
-    if (odds.size() == 1)
-    {  
-      q.push_back(odds[0]);
-      count[odds[0]]--;
-    }
-    for(int i=0;i<count.size();i++) {
-      while(count[i] > 0) {
-        q.push_front(i);
-        q.push_back(i);
-        count[i]-=2;
-      }
-    }
-    for(auto i:q) {
-      cout << (char) (i + 'A') ;
-    } 
-    cout << '\n';
-  }
-}
 
 
 void solve() {
   ll x,y;
   cin >> x >> y;
+  if( x == y) 
+  {
+    if  (y%3 != 0) {
+      cout << "NO\n";
+    } else {
+      cout << "YES\n";
+    }
+    return;
+  }
+  
+  if ( x < y ) {
+    swap(x,y);
+  }
+  ll a = (x - y);
+  ll b = y - a;
+  debug(a,b);
+  if ( (b) %3 !=0  || b <0 )
+  {
+    cout << "NO\n";
+    return;
+  }
+  if (x == 2 * a + b) {
+    cout << "YES\n";
+  }else
+  {
+    cout << "NO\n";
+  }
+  
+
+  // 2 * a + 3 * b  
+  // a  * 3 * b
 
 }
 
@@ -150,7 +148,7 @@ void solve() {
 int main(void) { 
   int t;
   init();
-  return 0;
+  // return 0;
   cin >> t;
   for(int tt = 0 ; tt < t ; tt++)  
   {
