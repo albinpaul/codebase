@@ -102,9 +102,30 @@ ll sqr(ll num) {
   return num * num;
 }
 int n;
-
+int a[25];
+ll diffnum = INF;
+ll fullsum;
+void check(int i, ll sum) {
+  if (i >= n) {
+    return;
+  }
+  // debug(fullsum)
+  if ( abs(fullsum  - 2 * sum) < diffnum ) {
+    diffnum = abs(fullsum - 2 * sum);
+  }
+  check(i+1,sum);
+  check(i+1,sum + a[i]);
+}
 void init() {
   cin >> n;
+  fullsum = 0;
+  range(i,n) {
+    cin >> a[i];
+    fullsum += a[i];
+  }
+  check(0,0LL);
+
+  cout << diffnum << endl;
 }
 
 

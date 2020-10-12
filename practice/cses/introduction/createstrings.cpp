@@ -101,10 +101,33 @@ const int MOD = 1e9 + 7;
 ll sqr(ll num) {
   return num * num;
 }
-int n;
+set <string> answer;
+string s;
+
+void generate(int i) {
+  answer.insert(s);
+  for(int j=i+1;j<s.size();j++) {
+    // generate(i+1);
+    debug(s,i,j);
+    generate(i+1);
+  
+    swap(s[i],s[j]);
+    
+    generate(i+1);
+  
+    swap(s[i],s[j]);
+   
+  }
+}
 
 void init() {
-  cin >> n;
+  cin >> s;
+  sort(all(s));
+  generate(0);
+  cout << answer.size() << '\n';
+  for(auto a:answer) {
+    cout << a << '\n';
+  }
 }
 
 
