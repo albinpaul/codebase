@@ -94,35 +94,30 @@ void debug_out(Head H, Tail... T) {
 using pii = pair <int,int>;
 using vi = vector <int>;
 using ll = long long;
-const long int N = 1.1e3;
+const long int N = 2.1e5;
 const int INF = 0x3f3f3f3f;
 const int MOD = 1e9 + 7;
 // int a[N];
 ll sqr(ll num) {
   return num * num;
 }
-int a[N][N];
-void init() { 
 
+void init() { 
+  int n;
+  cin >> n;
+  set <int> s;
+  range(i,n) {
+    int t;
+    cin >> t;
+    s.insert(t);
+  }
+  cout << s.size() << '\n';
 }
 
 
 void solve() {
-  int n;
-  cin >> n;
-  vector <ll> cols(2 * n + 1, 0);
-  range(i, n) {
-    range(j, n) {
-      int t;
-      cin >> t;
-      cols[i - j + n] += t;
-    }
-  }
-  ll answer = 0;
-  for(auto t: cols) {
-    answer = max(answer, t);
-  }
-  cout << answer << '\n';
+  ll x,y;
+  cin >> x >> y;
 
 }
 
@@ -131,11 +126,11 @@ void solve() {
 int main(void) { 
   int t;
   init();
-  // return 0;
+  return 0;
   cin >> t;
   for(int tt = 0 ; tt < t ; tt++)  
   {
-    cout << "Case #" << tt + 1 << ": ";
+    // cout << "Case #" << tt + 1 << ": ";
     solve();
   }
   return 0;
