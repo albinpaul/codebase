@@ -107,23 +107,17 @@ ll sqr(ll num) {
 void init() { 
   int n;
   cin >> n;
-  vector <pair<int, int>> a(n);
+  vector <int> a(n);
   range(i,n) {
-    cin >> a[i].first >> a[i].second;
+    cin >> a[i];
   }
-  sort(all(a), [](auto &f, auto &t) {
-    if (f.second != t.second)
-      return f.second < t.second;
-    return f.first < t.first;
-  });
-  int right_index = -1, answer = 0;
+  ll answer = numeric_limits<ll>::min(), ssum = 0;
   range(i,n) {
-    int l = a[i].first,r = a[i].second;
-    if (right_index <= l) {
-      right_index = r;
-      answer++;
+    ssum += a[i];
+    answer = max(answer, ssum);
+    if (ssum < 0) {
+      ssum = 0;
     }
-    // debug(answer, right_index);
   }
   cout << answer << '\n';
 }

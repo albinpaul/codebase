@@ -107,23 +107,28 @@ ll sqr(ll num) {
 void init() { 
   int n;
   cin >> n;
-  vector <pair<int, int>> a(n);
+  vector <int> a(n);
   range(i,n) {
-    cin >> a[i].first >> a[i].second;
+    cin >> a[i];
   }
-  sort(all(a), [](auto &f, auto &t) {
-    if (f.second != t.second)
-      return f.second < t.second;
-    return f.first < t.first;
-  });
-  int right_index = -1, answer = 0;
-  range(i,n) {
-    int l = a[i].first,r = a[i].second;
-    if (right_index <= l) {
-      right_index = r;
-      answer++;
+  int left = 0, right = 0;
+  set <int> b;
+  int answer = 0;
+  while(left < n && right < n) {
+    while(right < n && b.find(a[right]) == b.end()) {
+      b.insert(a[right]);
+      answer = max(answer, (int) b.size());
+      right++;
     }
-    // debug(answer, right_index);
+    // debug(left,right);
+    while(right < n && left < n && a[left] != a[right]) {
+      b.erase(b.find(a[left]));
+      left++;
+    }
+    if(right < n && left < n && a[left] == a[right]) {
+      b.erase(b.find(a[left]));
+      left++;
+    }
   }
   cout << answer << '\n';
 }
