@@ -118,6 +118,7 @@ void dfs(ll u) {
     if (!vis[n]) {
       dfs(n);
     }
+    
   }
   s.push(u);
 }
