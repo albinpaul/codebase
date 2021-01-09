@@ -1,0 +1,193 @@
+#include <bits/stdc++.h>
+using namespace std;
+template <typename A, typename B>
+string to_string(pair<A, B> p);
+ 
+template <typename A, typename B, typename C>
+string to_string(tuple<A, B, C> p);
+ 
+template <typename A, typename B, typename C, typename D>
+string to_string(tuple<A, B, C, D> p);
+ 
+string to_string(const string &s) {
+  return '"' + s + '"';
+}
+ 
+string to_string(const char *s) {
+  return to_string((string)s);
+}
+ 
+string to_string(bool b) {
+  return (b ? "true" : "false");
+}
+ 
+string to_string(vector<bool> v) {
+  bool first = true;
+  string res = "{";
+  for (int i = 0; i < static_cast<int>(v.size()); i++) {
+    if (!first) {
+      res += ", ";
+    }
+    first = false;
+    res += to_string(v[i]);
+  }
+  res += "}";
+  return res;
+}
+ 
+template <size_t N>
+string to_string(bitset<N> v) {
+  string res = "";
+  for (size_t i = 0; i < N; i++) {
+    res += static_cast<char>('0' + v[i]);
+  }
+  return res;
+}
+ 
+template <typename A>
+string to_string(A v) {
+  bool first = true;
+  string res = "{";
+  for (const auto &x : v) {
+    if (!first) {
+      res += ", ";
+    }
+    first = false;
+    res += to_string(x);
+  }
+  res += "}";
+  return res;
+}
+ 
+template <typename A, typename B>
+string to_string(pair<A, B> p) {
+  return "(" + to_string(p.first) + ", " + to_string(p.second) + ")";
+}
+ 
+template <typename A, typename B, typename C>
+string to_string(tuple<A, B, C> p) {
+  return "(" + to_string(get<0>(p)) + ", " + to_string(get<1>(p)) + ", " + to_string(get<2>(p)) + ")";
+}
+ 
+template <typename A, typename B, typename C, typename D>
+string to_string(tuple<A, B, C, D> p) {
+  return "(" + to_string(get<0>(p)) + ", " + to_string(get<1>(p)) + ", " + to_string(get<2>(p)) + ", " + to_string(get<3>(p)) + ")";
+}
+ 
+void debug_out() { cerr << endl; }
+ 
+template <typename Head, typename... Tail>
+void debug_out(Head H, Tail... T) {
+  cerr << " " << to_string(H);
+  debug_out(T...);
+}
+ 
+#ifdef LOCAL
+#define debug(...) cerr << "[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
+#else
+#define debug(...) 42
+#endif
+ 
+#define range(i, n) for (long i = 0; i < (long long)n; ++i)
+#define rrange(i, n) for (long i = (long long)n - 1; i >= 0; --i)
+#define all(x) x.begin(), x.end()
+#define watch(x) cerr << #x << " is : " << x << " "
+using pii = pair<long, long>;
+using vi = vector<long>;
+using ll = long long;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1e9 + 7;
+const ll LLMAX = numeric_limits<ll>::max();
+const ll LMAX = numeric_limits<long>::max();
+ 
+ 
+using ele = array<ll, 2>;
+using ele_v = vector<ele>;
+using ele_vv = vector<vector<ele>>;
+using ll_v = vector<ll>;
+using ll_vv = vector<vector<ll>>;
+using ll_s = stack<ll>;
+using bool_v = vector<bool>;
+ 
+template <typename D, typename V>
+void add(D &data, V value) {
+  data = (data + value)%MOD;
+}
+const long int N = 2.1e5; 
+ll n, q;
+
+ll h[N];
+struct  {
+  ll ele, s;
+} tree[(ll)(2 * log(N) * N)];
+void update(ll i, ll x, ll index = 0, array <ll, 2> seg= {0, n-1}) {
+  if (seg[0] == seg[1] && seg[0] == i) {
+    tree[index].s = 1;
+    tree[index].ele = x;
+    return;
+  }
+  if (seg[1] < i || i < seg[0])
+  {
+    return;
+  }
+  ll mid = (seg[0] + seg[1])/2;
+  update(i, x, 2 * index + 1, {seg[0], mid});
+  update(i, x, 2 * index + 2, {mid + 1, seg[1]});
+  tree[index].s = (tree[2 * index + 1].s +  tree[2 * index + 2].s);
+}
+ll answer = -1;
+void query(ll aindex,ll l=0, ll r=n-1, ll index=0, ll leftsum = 0) {
+  if (answer != -1 || l > r || leftsum > aindex) {
+    return;
+  }
+  if (l == r ) {
+    
+    if (tree[index].s + leftsum == aindex)
+    {
+      tree[index].s -= 1;
+      answer = tree[index].ele;
+    }
+    return;
+  }
+  ll mid = (l + r)/2;
+  if (aindex <= tree[2*index + 1].s + leftsum)
+    query(aindex,l, mid, 2*index + 1, leftsum);
+  else
+    query(aindex,mid + 1, r, 2*index + 2, leftsum + tree[2*index + 1].s);
+  tree[index].s = (tree[2 * index + 1].s + tree[2 * index + 2].s);
+
+}
+void init() {
+  cin >> n ;
+  range(i, n) {
+    cin >> h[i];
+    update(i, h[i]);
+  }
+  range(i, n) {
+    ll gs;
+    cin >> gs;
+    answer = -1;
+    query(gs);
+    cout << answer << ' '; 
+  }
+}
+ 
+void solve() {
+ 
+}
+ 
+int main(void) {
+  #ifdef LOCAL
+  freopen("in", "r", stdin); 
+  #endif
+  ios_base::sync_with_stdio(false);
+  cin.tie(NULL);
+  int t;
+  init();
+  return 0;
+  cin >> t;
+  for (int tt = 0; tt < t; tt++) {
+    solve();
+  }
+  return 0;
+}
