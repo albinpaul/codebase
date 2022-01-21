@@ -1,36 +1,50 @@
-
- //~ while (clock()<=69*CLOCKS_PER_SEC)
-//~ #pragma comment(linker, "/stack:200000000")
-#pragma GCC optimize("O3")
-//~ #pragma GCC optimize("Ofast")
-//~ #pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
-//~ #pragma GCC optimize("unroll-loops")
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 
-using namespace __gnu_pbds;
 using namespace std;
-#ifdef DEBUG
+#ifdef LOCAL
 #include "debug.hpp"
+#define debug(...) cerr << "[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
+#else
+#define debug(...) 
 #endif
 
-template <typename T>
-using ordered_set =
-    tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+#define range(i, end) for (int32_t i = 0; i < (int32_t)end; ++i)
+#define range2(i,start, end) for (int32_t i = start; i < (int32_t)end; i=i + (start < end)?1:-1)
+#define all(x) x.begin(), x.end()
+ 
+#ifdef LOCAL
+	#define profile(x) ScopedTimer timer(x);
+#else
+	#define profile(x) 
+#endif
+
+const int INF = 0x3f3f3f3f;
+const int64_t LINF = 2e18;
+const int MOD = 1000*1000*1000 + 7;  
+
+int64_t mod(int64_t num){
+	assert(num >= 0LL);
+	return num%MOD; 
+}
 
 
-using ll=long long;
-using pii=pair<int,int>;
-using pll=pair<ll,ll>;
-using vi=vector<int>;
-using vll=vector<ll>;
 
+void solve(int32_t i){
+	
+}
 
-int main(){
+int main(void) {
+	profile("main");
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
-
-
+	int t;
+	cin >> t;
+	range(i, t){
+		// cout << "Case #"<<(i+1)<<": ";
+		solve(i);
+	}
+	
 	return 0;
 }
+
+

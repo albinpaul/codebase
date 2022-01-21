@@ -1,45 +1,102 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <typename T>
-ostream & operator<<(ostream &out,vector <T> v){
-	int i=0;
-	for(auto it:v){
-		out<<(i++)<<" -> "<<it<<"\n";
-	}out<< endl;
-	return out;
+template <typename A, typename B>
+string to_string(pair<A, B> p);
+
+template <typename A, typename B, typename C>
+string to_string(tuple<A, B, C> p);
+
+template <typename A, typename B, typename C, typename D>
+string to_string(tuple<A, B, C, D> p);
+
+string to_string(const string &s) {
+  return '"' + s + '"';
 }
 
-template <typename T1,typename T2>
-ostream & operator<<(ostream &out, pair < T1,T2 > v){
-	out<<"{"<<v.first<<","<<v.second<<"}";
-	return out;
+string to_string(const char *s) {
+  return to_string((string)s);
 }
 
-// template <typename T1>
-// ostream & operator<<(ostream &out, unordered_set < T1 > v){
-// 	for(auto it:v){
-// 		out << it << " ";
-// 	}
-// 	return out;
-// }
+string to_string(bool b) {
+  return (b ? "true" : "false");
+}
+
+string to_string(vector<bool> v) {
+  bool first = true;
+  string res = "{";
+  for (int i = 0; i < static_cast<int>(v.size()); i++) {
+    if (!first) {
+      res += ", ";
+    }
+    first = false;
+    res += to_string(v[i]);
+  }
+  res += "}";
+  return res;
+}
+
+template <size_t N>
+string to_string(bitset<N> v) {
+  string res = "";
+  for (size_t i = 0; i < N; i++) {
+    res += static_cast<char>('0' + v[i]);
+  }
+  return res;
+}
+
+template <typename A>
+string to_string(A v) {
+  bool first = true;
+  string res = "{";
+  for (const auto &x : v) {
+    if (!first) {
+      res += ", ";
+    }
+    first = false;
+    res += to_string(x);
+  }
+  res += "}";
+  return res;
+}
+
+template <typename A, typename B>
+string to_string(pair<A, B> p) {
+  return "(" + to_string(p.first) + ", " + to_string(p.second) + ")";
+}
+
+template <typename A, typename B, typename C>
+string to_string(tuple<A, B, C> p) {
+  return "(" + to_string(get<0>(p)) + ", " + to_string(get<1>(p)) + ", " + to_string(get<2>(p)) + ")";
+}
+
+template <typename A, typename B, typename C, typename D>
+string to_string(tuple<A, B, C, D> p) {
+  return "(" + to_string(get<0>(p)) + ", " + to_string(get<1>(p)) + ", " + to_string(get<2>(p)) + ", " + to_string(get<3>(p)) + ")";
+}
+
+void debug_out() { cerr << endl; }
+
+template <typename Head, typename... Tail>
+void debug_out(Head H, Tail... T) {
+  cerr << " " << to_string(H);
+  debug_out(T...);
+}
 
 
+class ScopedTimer
+{
+  public:
+  ScopedTimer(string name): name(name){
+    start = std::chrono::high_resolution_clock::now();
+  }
 
-// template <typename T1>
-// ostream & operator<<(ostream &out, set< T1 > v){
-// 	for(auto it:v){
-// 		out << it << " ";
-// 	}
-// 	return out;
-// }
-
-
-// template <typename T1,typename T2>
-// ostream & operator<<(ostream &out, unordered_map < T1,T2 > v){
-// 	for(auto it:v){
-// 		out <<"{"<< it.first << " " << it.second << "}\n";
-// 	}
-// 	return out;
-// }
-
+  ~ScopedTimer(){
+    auto done = std::chrono::high_resolution_clock::now();
+    std::cout << "Time Taken for "<< name << ": " <<
+      std::chrono::duration_cast<std::chrono::microseconds>(done-start).count() << "ms \n";
+  }
+  private:
+    chrono::time_point<chrono::system_clock, chrono::nanoseconds> start;
+    std::string name;
+};
